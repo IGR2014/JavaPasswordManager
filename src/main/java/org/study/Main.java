@@ -16,7 +16,7 @@ public class Main extends Application {
     // Application start
     @Override
     public void start(Stage stage) throws Exception {
-	    // 
+        // 
         Group root = new Group();
         //
         Scene scene = new Scene(root, 800, 600);
