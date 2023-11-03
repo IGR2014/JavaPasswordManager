@@ -1,0 +1,20 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+}
+
+repositories {
+    mavenCentral() 
+}
+
+application {
+    //mainModule = 'org.study'
+    //mainClass = 'org.study.Main'
+}
+
+javafx {
+    version = '17.0.9'
+    modules = ['javafx.controls']
+}
+
+mainClassName = 'org.study.Main'
