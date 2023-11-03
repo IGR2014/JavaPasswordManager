@@ -3,39 +3,80 @@ package org.study;
 
 // JavaFX
 import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Scene;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+// UI
+import org.study.ui.LoginDialog;
+import org.study.ui.MainWindow;
 
 
-// Main application class
+// Головний клас додатку
 public class Main extends Application {
 
-    // Application start
-    @Override
-    public void start(Stage stage) throws Exception {
-        // 
-        Group root = new Group();
-        //
-        Scene scene = new Scene(root, 800, 600);
-        //
-        scene.setFill(Color.WHITE);
-        //
-        stage.getIcons().add(new Image(Main.class.getResourceAsStream("/icon.png")));
-        //
-        stage.setTitle("SuperPasswordManager");
-        //
-        stage.setScene(scene);
-        //
-        stage.show();
-    }
+	// Запуск додатку
+	@Override
+	public void start(Stage stage) throws Exception {
 
-    // Main func
-    public static void main(String[] args) {
-        // Launch app
-        launch(args);
-    }
+		// Іконка головного вікна додатку
+		stage.getIcons().add(new Image(Main.class.getResourceAsStream("/icon.png")));
+		// Заголовок головного вікна
+		stage.setTitle("SuperPasswordManager");
+
+		// Ділог входу у додаток
+		final LoginDialog loginDialog = new LoginDialog(stage);
+		// Ділог по розміру вікна
+		loginDialog.sizeToScene();
+		// Розмір діалогу не можна змінювати
+		loginDialog.setResizable(false);
+		// Показати ділог входу
+		loginDialog.show();
+
+		// Дії при натисканні кнопки входу у додаток
+		loginDialog.onSignIn(
+			// Екземпляр обробника дій
+			new EventHandler<ActionEvent>() {
+				// Обробник
+				@Override
+				public void handle(ActionEvent event) {
+					// Закрити логін діалог
+					loginDialog.close();
+					// Головне вікно додатку
+					final MainWindow mainWindow = new MainWindow(stage);
+					// Головне вікно по розміру вікна
+					mainWindow.sizeToScene();
+					// Розмір головного вікна не можна змінювати
+					mainWindow.setResizable(false);
+					// Показати головне вікно
+					mainWindow.show();
+				}
+			}
+		);
+
+		// Дії при натисканні кнопки реєстрації у додатку
+		loginDialog.onSignUp(
+			// Екземпляр обробника дій
+			new EventHandler<ActionEvent>() {
+				// Обробник
+				@Override
+				public void handle(ActionEvent event) {
+					// Закриття усіх вікон
+					Platform.exit();
+					// Вихід з програми
+					System.exit(0);
+				}
+			}
+		);
+
+	}
+
+	// Головна функція додатку
+	public static void main(String[] args) {
+		// Запуск UI
+		launch(args);
+	}
 
 }
+
