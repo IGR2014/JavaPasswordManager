@@ -6,20 +6,13 @@ import org.study.credentials.ICredential;
 
 
 //
-public class StorageMethodServer implements IStorageMethod {
+public class StorageMethodFile implements IStorageMethod {
 
 
 	//
 	public boolean isAvailable() {
 		//
-		return false;
-	}
-
-
-	//
-	public boolean connectToServer(ICredential credentials) throws Exception {
-		//
-		throw new Exception("Server does not exists");
+		return true;
 	}
 
 
@@ -33,13 +26,13 @@ public class StorageMethodServer implements IStorageMethod {
 	//
 	public ICredential load(String key) throws Exception {
 		//
-		throw new Exception("Server does not exists");
+		throw new Exception("File does not exists");
 	}
 
 	//
 	public boolean store(String key, ICredential credentials) throws Exception {
 		//
-		throw new Exception("Server does not exists");
+		throw new Exception("File does not exists");
 	}
 
 
