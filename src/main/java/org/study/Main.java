@@ -23,7 +23,7 @@ public class Main extends Application {
 		// Іконка головного вікна додатку
 		stage.getIcons().add(new Image(Main.class.getResourceAsStream("/icon.png")));
 		// Заголовок головного вікна
-		stage.setTitle("SuperPasswordManager");
+		stage.setTitle("Супер Менеджер Паролів");
 
 		// Ділог входу у додаток
 		final LoginDialog loginDialog = new LoginDialog(stage);
