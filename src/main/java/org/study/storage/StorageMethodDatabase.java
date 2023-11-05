@@ -156,7 +156,7 @@ public class StorageMethodDatabase implements IStorageMethod, AutoCloseable {
 		String login	= "";
 		// Значення паролю для БД
 		String password	= "";
-		// Це апаратный токен ?
+		// Це апаратний токен ?
 		if (credentials instanceof CredentialHardwareToken) {
 			// Отримання значення апаратного токена
 			tokenHw		= ((CredentialHardwareToken)credentials).mToken;
@@ -164,7 +164,7 @@ public class StorageMethodDatabase implements IStorageMethod, AutoCloseable {
 		} else if (credentials instanceof CredentialSoftwareToken) {
 			// Отримання значення програмного токена
 			tokenSw		= ((CredentialHardwareToken)credentials).mToken;
-		// Це логын/пароль токен ?
+		// Це логін/пароль токен ?
 		} else if (credentials instanceof CredentialLoginPassword) {
 			// Отримання значення логіну
 			login		= ((CredentialLoginPassword)credentials).mLogin;

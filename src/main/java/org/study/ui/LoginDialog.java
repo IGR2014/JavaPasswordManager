@@ -21,10 +21,9 @@ public class LoginDialog extends Stage {
 
 
 	// Кнопка входу у додаток
-	Button signIn = new Button("Sign In");
-
+	final Button signIn	= new Button("Вхід");
 	// Кнопка реєстрації у додатку
-	Button signUp = new Button("Sign Up");
+	final Button signUp	= new Button("Реєстрація");
 
 
 	// Конструктор
@@ -57,6 +56,8 @@ public class LoginDialog extends Stage {
 
 		// Макет розподілу елементів
 		final GridPane gridpane = new GridPane();
+		// Розмір макету під розмір вікна
+		gridpane.setPrefSize(owner.getWidth(), owner.getHeight());
 		// Поля навколо елементів макету
 		gridpane.setPadding(new Insets(10));
 		// Горизонтальні поля між елементами
