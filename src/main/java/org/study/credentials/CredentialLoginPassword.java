@@ -6,9 +6,9 @@ public class CredentialLoginPassword implements ICredential {
 
 
 	// Логін користувача
-	String	mLogin		= null;
+	public String	mLogin		= null;
 	// Пароль користувача
-	String	mPassword	= null;
+	public String	mPassword	= null;
 
 
 	// Конструктор

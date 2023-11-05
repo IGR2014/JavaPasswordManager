@@ -6,7 +6,7 @@ public class CredentialHardwareToken implements ICredential {
 
 
 	// Значення апаратного токена
-	byte[] mToken = null;
+	public byte[] mToken = null;
 
 
 	// Конструктор

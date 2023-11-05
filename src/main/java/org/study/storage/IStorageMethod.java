@@ -1,27 +1,29 @@
 package org.study.storage;
 
 
-//
+// Java
+import java.util.*;
+// Credentials
 import org.study.credentials.ICredential;
 
 
-//
+// Інтерфейс шо описує методі збереження паролів
 public interface IStorageMethod {
 
 
-	//
+	// Метод доступний для використання ?
 	public boolean isAvailable();
 
 
-	//
-	public String[] keys();
+	// Перелік ключів що зберігаються
+	public List<String> keys();
 
 
-	//
-	public ICredential load(String key) throws Exception;
+	// Дістати дані що зберігаються за потрібним ключем
+	public List<ICredential> load(String key) throws Exception;
 
-	//
-	public boolean store(String key, ICredential credentials) throws Exception;
+	// Зберегти дані за відповідним ключем
+	public void store(String key, ICredential credentials) throws Exception;
 
 
 }

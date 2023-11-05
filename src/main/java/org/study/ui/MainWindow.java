@@ -5,10 +5,18 @@ package org.study.ui;
 import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+// Credentials
+import org.study.credentials.CredentialLoginPassword;
+// Storage
+import org.study.storage.*;
 
 
 // Головне вікно додатку
 public class MainWindow extends Stage {
+
+
+	// Клас методу зберігання даних
+	IStorageMethod mStorage = StorageMethodFactory.getInstance(new CredentialLoginPassword("admin", "admin"));
 
 
 	// Конструктор

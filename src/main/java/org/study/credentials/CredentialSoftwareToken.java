@@ -6,7 +6,7 @@ public class CredentialSoftwareToken implements ICredential {
 
 
 	// Значення програмного токена
-	byte[] mToken = null;
+	public byte[] mToken = null;
 
 
 	// Конструктор

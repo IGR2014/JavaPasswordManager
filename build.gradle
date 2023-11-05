@@ -1,20 +1,29 @@
+// Плагіни
 plugins {
-    id 'application'
-    id 'org.openjfx.javafxplugin' version '0.1.0'
+	id 'application'
+	id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
+// Репозиторії для пошуку пакетів
 repositories {
-    mavenCentral() 
+	mavenCentral() 
 }
 
+// Параметри додатку
 application {
-    //mainModule = 'org.study'
-    //mainClass = 'org.study.Main'
+	// TODO
 }
 
+// Список залежностей
+dependencies {
+	implementation 'org.xerial:sqlite-jdbc:3.7.2'
+}
+
+// Параметри JavaFX GUI
 javafx {
-    version = '17.0.9'
-    modules = ['javafx.controls']
+	version = '17.0.9'
+	modules = ['javafx.controls']
 }
 
+// Головний клас додатку
 mainClassName = 'org.study.Main'
