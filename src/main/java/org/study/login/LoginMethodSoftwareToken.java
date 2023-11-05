@@ -6,7 +6,7 @@ import org.study.credentials.ICredential;
 
 
 //
-public class LoginMethodHardwareToken implements ILoginMethod {
+public class LoginMethodSoftwareToken implements ILoginMethod {
 
 	//
 	public boolean isAvailable() {
