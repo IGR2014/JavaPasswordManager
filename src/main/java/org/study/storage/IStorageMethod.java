@@ -23,7 +23,10 @@ public interface IStorageMethod {
 	public List<ICredential> load(String key) throws Exception;
 
 	// Зберегти дані за відповідним ключем
-	public void store(String key, ICredential credentials) throws Exception;
+	public void store(ICredential credentials) throws Exception;
+
+	// Видалити дані за відповідним ключем
+	public void remove(String key) throws Exception;
 
 
 }

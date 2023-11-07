@@ -8,6 +8,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
+import org.study.credentials.ICredential;
+// Logins
+import org.study.login.ILoginMethod;
+import org.study.login.LoginMethodFactory;
 // UI
 import org.study.ui.LoginDialog;
 import org.study.ui.MainWindow;
@@ -15,6 +20,11 @@ import org.study.ui.MainWindow;
 
 // Головний клас додатку
 public class Main extends Application {
+
+
+	// Клас методу входу у додаток
+	ILoginMethod mLogin = LoginMethodFactory.getInstance();
+
 
 	// Запуск додатку
 	@Override
@@ -41,16 +51,28 @@ public class Main extends Application {
 				// Обробник
 				@Override
 				public void handle(ActionEvent event) {
+					// Try
+					try {
+						// Користувацькі дані
+						final ICredential credential = loginDialog.getCredentials();
+						// Перевірка даних користувача
+						if (mLogin.validate(credential)) {
+							// Головне вікно додатку
+							final MainWindow mainWindow = new MainWindow(stage, credential);
+							// Головне вікно по розміру вікна
+							mainWindow.sizeToScene();
+							// Розмір головного вікна не можна змінювати
+							mainWindow.setResizable(false);
+							// Показати головне вікно
+							mainWindow.show();
+						}
+					}
+					catch (Exception e) {
+						// Відображення помилки у лог
+						e.printStackTrace();
+					}
 					// Закрити логін діалог
 					loginDialog.close();
-					// Головне вікно додатку
-					final MainWindow mainWindow = new MainWindow(stage);
-					// Головне вікно по розміру вікна
-					mainWindow.sizeToScene();
-					// Розмір головного вікна не можна змінювати
-					mainWindow.setResizable(false);
-					// Показати головне вікно
-					mainWindow.show();
 				}
 			}
 		);
@@ -72,11 +94,13 @@ public class Main extends Application {
 
 	}
 
+
 	// Головна функція додатку
 	public static void main(String[] args) {
 		// Запуск UI
 		launch(args);
 	}
+
 
 }
 

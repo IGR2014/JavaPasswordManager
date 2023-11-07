@@ -4,6 +4,8 @@ package org.study.ui;
 // JavaFX
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.stage.Stage;
@@ -13,7 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 // Credentials
-import org.study.credentials.CredentialLoginPassword;
+import org.study.credentials.ICredential;
 // Storage
 import org.study.storage.*;
 
@@ -23,17 +25,21 @@ public class MainWindow extends Stage {
 
 
 	// Клас методу зберігання даних
-	IStorageMethod mStorage = StorageMethodFactory.getInstance(new CredentialLoginPassword("admin", "admin"));
+	private IStorageMethod	mStorage;
 
+	// Список ключів що зберігаються в базі даних
+	ObservableList<String>	keys;
 
 	// Кнопка додавання реєстраційних даних
-	final Button accountAdd		= new Button("Додати акаунт");
+	final Button		accountAdd		= new Button("Додати акаунт");
 	// Кнопка видалення існуючих реєстраційних даних
-	final Button accountRemove	= new Button("Видалити акаунт");
+	final Button		accountRemove		= new Button("Видалити акаунт");
+	// Кнопка генерації надійного пароля
+	final Button		passwordGenerate	= new Button("Згенерувати надійний пароль");
 
 
 	// Конструктор
-	public MainWindow(Stage owner) {
+	public MainWindow(Stage owner, ICredential credential) {
 
 		// Виклик конструктора базового класу
 		super();
@@ -51,25 +57,23 @@ public class MainWindow extends Stage {
 		// Макет вікна
 		final Group root = new Group();
 		// Вміст вікна
-		final Scene scene = new Scene(root, 800, 600);
+		final Scene scene = new Scene(root);
 		// Встановлення вмісту вікна
 		setScene(scene);
 
-		// Фіксована ширина вікна від змісту
-		owner.setWidth(scene.getWidth());
-		// Фіксована висота вікна від змісту
-		owner.setHeight(scene.getHeight());
-
 		// Макет розподілу елементів
 		final GridPane gridpane = new GridPane();
-		// Розмір макету під розмір вікна
-		gridpane.setPrefSize(owner.getWidth(), owner.getHeight());
 		// Поля навколо елементів макету
 		gridpane.setPadding(new Insets(10));
 		// Горизонтальні поля між елементами
 		gridpane.setHgap(10);
 		// Вертикальні поля між елементами
 		gridpane.setVgap(10);
+
+		// Фіксована ширина вікна від змісту
+		owner.setWidth(gridpane.getWidth());
+		// Фіксована висота вікна від змісту
+		owner.setHeight(gridpane.getHeight());
 
 		// Кнопка додається в клітинку (0, 0)
 		gridpane.add(accountAdd, 0, 0);
@@ -81,8 +85,16 @@ public class MainWindow extends Stage {
 		// Кнопка розташовується по лівій стороні
 		GridPane.setHalignment(accountRemove, HPos.LEFT);
 
-		// Список ключів що зберігаються в базі даних
-		final ObservableList<String> keys = FXCollections.observableArrayList(mStorage.keys());
+		// Кнопка додається в клітинку (2, 0)
+		gridpane.add(passwordGenerate, 2, 0);
+		// Кнопка розташовується по лівій стороні
+		GridPane.setHalignment(passwordGenerate, HPos.LEFT);
+
+		// Клас методу зберігання даних
+		mStorage = StorageMethodFactory.getInstance(credential);
+		// Обновление
+		keys = FXCollections.observableArrayList(mStorage.keys());
+
 		// Список елементів для відображення
 		final ListView<String> listView = new ListView<String>(keys);
 		// Список додається в клітинку (0, 1)
@@ -90,7 +102,66 @@ public class MainWindow extends Stage {
 		// Поле займає 4 клітини завширшки
 		GridPane.setColumnSpan(listView, 4);
 
-		// TODO:
+		// Дії при натисканні кнопки створення акаунту
+		accountAdd.setOnAction(
+			new EventHandler<ActionEvent>() {
+				// Обробник
+				@Override
+				public void handle(ActionEvent event) {
+					// Ділог входу у додаток
+					final CredentialDialog credentialDialog = new CredentialDialog(owner);
+					// Ділог по розміру вікна
+					credentialDialog.sizeToScene();
+					// Розмір діалогу не можна змінювати
+					credentialDialog.setResizable(false);
+					// Показати ділог входу
+					credentialDialog.show();
+					// Обновление
+					keys = FXCollections.observableArrayList(mStorage.keys());
+				}
+			}
+		);
+
+		// Дії при натисканні кнопки видалення акаунту
+		accountRemove.setOnAction(
+			new EventHandler<ActionEvent>() {
+				// Обробник
+				@Override
+				public void handle(ActionEvent event) {
+					// Try
+					try {
+						// Отримання ключа
+						String key = listView.getSelectionModel().getSelectedItem();
+						// Видалення облікового запису за ключем
+						mStorage.remove(key);
+					}
+					catch (Exception e) {
+						// Відображення помилки у лог
+						e.printStackTrace();
+					}
+					// Обновление
+					keys = FXCollections.observableArrayList(mStorage.keys());
+				}
+			}
+		);
+
+		// Дії при натисканні кнопки генерації нового паролю
+		passwordGenerate.setOnAction(
+			new EventHandler<ActionEvent>() {
+				// Обробник
+				@Override
+				public void handle(ActionEvent event) {
+					// Ділог генерації паролю
+					final PasswordGenerationDialog passGenDialog = new PasswordGenerationDialog(owner);
+					// Ділог по розміру вікна
+					passGenDialog.sizeToScene();
+					// Розмір діалогу не можна змінювати
+					passGenDialog.setResizable(false);
+					// Показати ділог входу
+					passGenDialog.show();
+				}
+			}
+		);
 
 		// Макет розподілу елементів додається у макет вікна
 		root.getChildren().add(gridpane);

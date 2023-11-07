@@ -2,7 +2,7 @@ package org.study.credentials;
 
 
 // Клас збереження даних реєстрації у форматі апаратного токена
-public class CredentialHardwareToken implements ICredential {
+public class CredentialHardwareToken extends CredentialBase {
 
 
 	// Значення апаратного токена
@@ -10,7 +10,9 @@ public class CredentialHardwareToken implements ICredential {
 
 
 	// Конструктор
-	public CredentialHardwareToken(byte[] token) {
+	public CredentialHardwareToken(String key, byte[] token) {
+		// Базовий конструктор
+		super(key);
 		// Збереження апаратного токена
 		mToken = token;
 	}

@@ -30,6 +30,7 @@ public class StorageMethodFile implements IStorageMethod {
 
 
 	// Метод доступний для використання ?
+	@Override
 	public boolean isAvailable() {
 		// Так
 		return true;
@@ -37,6 +38,7 @@ public class StorageMethodFile implements IStorageMethod {
 
 
 	// Перелік ключів що зберігаються
+	@Override
 	public List<String> keys() {
 		//
 		return new ArrayList<String> ();
@@ -44,13 +46,22 @@ public class StorageMethodFile implements IStorageMethod {
 
 
 	// Дістати дані що зберігаються за потрібним ключем
+	@Override
 	public List<ICredential> load(String key) throws Exception {
 		//
 		throw new Exception("File does not exists");
 	}
 
 	// Зберегти дані за відповідним ключем
-	public void store(String key, ICredential credentials) throws Exception {
+	@Override
+	public void store(ICredential credentials) throws Exception {
+		//
+		throw new Exception("File does not exists");
+	}
+
+	// Видалити дані за відповідним ключем
+	@Override
+	public void remove(String key) throws Exception {
 		//
 		throw new Exception("File does not exists");
 	}

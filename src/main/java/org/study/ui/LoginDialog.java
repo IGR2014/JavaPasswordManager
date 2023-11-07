@@ -1,6 +1,8 @@
 package org.study.ui;
 
 
+import org.study.credentials.CredentialLoginPassword;
+
 // JavaFX
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,6 +16,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+// Credentials
+import org.study.credentials.ICredential;
 
 
 // Ділог входу у додаток
@@ -21,9 +25,14 @@ public class LoginDialog extends Stage {
 
 
 	// Кнопка входу у додаток
-	final Button signIn	= new Button("Вхід");
+	final Button		signIn		= new Button("Вхід");
 	// Кнопка реєстрації у додатку
-	final Button signUp	= new Button("Реєстрація");
+	final Button		signUp		= new Button("Реєстрація");
+
+	// Поле редагування з логіном користувача
+	final TextField		userNameFld	= new TextField();
+	// Поле редагування з паролем користувача
+	final PasswordField	passwordFld	= new PasswordField();
 
 
 	// Конструктор
@@ -49,21 +58,19 @@ public class LoginDialog extends Stage {
 		// Встановлення вмісту вікна
 		setScene(scene);
 
-		// Фіксована ширина вікна від змісту
-		owner.setWidth(scene.getWidth());
-		// Фіксована висота вікна від змісту
-		owner.setHeight(scene.getHeight());
-
 		// Макет розподілу елементів
 		final GridPane gridpane = new GridPane();
-		// Розмір макету під розмір вікна
-		gridpane.setPrefSize(owner.getWidth(), owner.getHeight());
 		// Поля навколо елементів макету
 		gridpane.setPadding(new Insets(10));
 		// Горизонтальні поля між елементами
 		gridpane.setHgap(10);
 		// Вертикальні поля між елементами
 		gridpane.setVgap(10);
+
+		// Фіксована ширина вікна від змісту
+		owner.setWidth(gridpane.getWidth());
+		// Фіксована висота вікна від змісту
+		owner.setHeight(gridpane.getHeight());
 
 		// Текстове поле з логіном користувача
 		final Label userNameLbl = new Label("Логін: ");
@@ -75,15 +82,11 @@ public class LoginDialog extends Stage {
 		// Текстове поле додається в клітинку (0, 1)
 		gridpane.add(passwordLbl, 0, 1);
 
-		// Поле редагування з логіном користувача
-		final TextField userNameFld = new TextField();
 		// Текстове поле додається в клітинку (1, 0)
 		gridpane.add(userNameFld, 1, 0);
 		// Поле займає 2 клітини завширшки
 		GridPane.setColumnSpan(userNameFld, 2);
 
-		// Поле редагування з паролем користувача
-		final PasswordField passwordFld = new PasswordField();
 		// Текстове поле додається в клітинку (1, 1)
 		gridpane.add(passwordFld, 1, 1);
 		// Поле займає 2 клітини завширшки
@@ -118,6 +121,12 @@ public class LoginDialog extends Stage {
 		signUp.setOnAction(buttonHandler);
 	}
 
+
+	// Метод повертає реєстраційні дані користувача
+	public ICredential getCredentials() {
+		// Формування реєстраційних даних користувача
+		return new CredentialLoginPassword("", userNameFld.getText(), passwordFld.getText());
+	}
 
 }
 

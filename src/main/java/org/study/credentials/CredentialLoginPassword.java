@@ -2,7 +2,7 @@ package org.study.credentials;
 
 
 // Клас збереження даних реєстрації у форматі Логін/Пароль
-public class CredentialLoginPassword implements ICredential {
+public class CredentialLoginPassword extends CredentialBase {
 
 
 	// Логін користувача
@@ -12,7 +12,9 @@ public class CredentialLoginPassword implements ICredential {
 
 
 	// Конструктор
-	public CredentialLoginPassword(String login, String password) {
+	public CredentialLoginPassword(String key, String login, String password) {
+		// Базовий конструктор
+		super(key);
 		// Збереження логіну
 		mLogin		= login;
 		// Збереження паролю

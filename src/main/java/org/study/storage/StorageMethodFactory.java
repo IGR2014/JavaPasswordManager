@@ -2,25 +2,38 @@ package org.study.storage;
 
 
 // Credentials
-import org.study.credentials.CredentialLoginPassword;
+import org.study.credentials.*;
 
 
-//
+// Фабрика-сінглтон створення даних входу у додаток
 public final class StorageMethodFactory {
 
 
-	//
+	// Об'єкт зберігача даних
 	private static IStorageMethod mInstance;
 
 
-	//
-	public static synchronized IStorageMethod getInstance(CredentialLoginPassword credential) {
-		//
+	// Доступ до об'єкта зберігача даних
+	public static synchronized IStorageMethod getInstance(ICredential credential) {
+		// Об'єкт зберігача даних ще не створений ?
 		if (null == mInstance) {
-			//
-			mInstance = new StorageMethodDatabase(credential);
+			// Перевірка типу переданих даних
+			if (credential instanceof CredentialLoginPassword) {
+				// Створення об'єкта зберігача даних
+				mInstance = new StorageMethodDatabase((CredentialLoginPassword)credential);
+			}
+			// Перевірка типу переданих даних
+			else if (credential instanceof CredentialHardwareToken) {
+				// Створення об'єкта зберігача даних
+				mInstance = null;
+			}
+			// Перевірка типу переданих даних
+			else if (credential instanceof CredentialSoftwareToken) {
+				// Створення об'єкта зберігача даних
+				mInstance = null;
+			}
 		}
-		//
+		// Повернення об'єкта зберігача даних
 		return mInstance;
 	}
 

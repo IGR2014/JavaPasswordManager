@@ -12,10 +12,7 @@ import java.nio.file.Paths;
 // Java utils
 import java.util.*;
 // Credentials
-import org.study.credentials.CredentialHardwareToken;
-import org.study.credentials.CredentialLoginPassword;
-import org.study.credentials.CredentialSoftwareToken;
-import org.study.credentials.ICredential;
+import org.study.credentials.*;
 
 
 // Інтерфейс шо описує методі збереження паролів
@@ -76,6 +73,7 @@ public class StorageMethodDatabase implements IStorageMethod, AutoCloseable {
 
 
 	// Метод доступний для використання ?
+	@Override
 	public boolean isAvailable() {
 		// Так
 		return true;
@@ -83,17 +81,18 @@ public class StorageMethodDatabase implements IStorageMethod, AutoCloseable {
 
 
 	// Перелік ключів що зберігаються
+	@Override
 	public List<String> keys() {
 		// Try
 		try {
 			// Масив для збереження результатів
 			List<String> keys = new ArrayList<String>();
 			// Збір усіх ключів з таблиці паролів у БД
-			final ResultSet result = mStatement.executeQuery("SELECT 'Keys' FROM 'Credentials';");
+			final ResultSet result = mStatement.executeQuery("SELECT Key FROM 'Credentials';");
 			// Прохід по списку результатів
 			while (result.next()) {
 				// Додання ключа до масиву
-				keys.add(result.getString("Keys"));
+				keys.add(result.getString("Key"));
 			}
 			// Завершення роботи з результатом
 			result.close();
@@ -111,11 +110,12 @@ public class StorageMethodDatabase implements IStorageMethod, AutoCloseable {
 
 
 	// Дістати дані що зберігаються за потрібним ключем
+	@Override
 	public List<ICredential> load(String key) throws Exception {
 		// Масив для збереження результатів
 		final List<ICredential> credentials = new ArrayList<ICredential>();
 		// Збір усіх даних з таблиці паролів у БД
-		final ResultSet result = mStatement.executeQuery("SELECT * FROM 'Credentials' WHERE 'Keys' = " + key +";");
+		final ResultSet result = mStatement.executeQuery("SELECT * FROM 'Credentials' WHERE Key = \'" + key +"\';");
 		// Прохід по списку результатів
 		while (result.next()) {
 			// Зчитування апаратного токена з БД
@@ -129,15 +129,15 @@ public class StorageMethodDatabase implements IStorageMethod, AutoCloseable {
 			// Апаратний токен ?
 			if (0 != tokenHw.length) {
 				// Додання ключа до масиву
-				credentials.add(new CredentialHardwareToken(tokenHw));
+				credentials.add(new CredentialHardwareToken(key, tokenHw));
 			// Програмний токен ?
 			} else if (0 != tokenSw.length) {
 				// Додання ключа до масиву
-				credentials.add(new CredentialSoftwareToken(tokenSw));
+				credentials.add(new CredentialSoftwareToken(key, tokenSw));
 			// Логін та пароль
 			} else {
 				// Додання ключа до масиву
-				credentials.add(new CredentialLoginPassword(login, password));
+				credentials.add(new CredentialLoginPassword(key, login, password));
 			}
 		}
 		// Завершення роботи з результатом
@@ -147,7 +147,10 @@ public class StorageMethodDatabase implements IStorageMethod, AutoCloseable {
 	}
 
 	// Зберегти дані за відповідним ключем
-	public void store(String key, ICredential credentials) throws Exception {
+	@Override
+	public void store(ICredential credentials) throws Exception {
+		// Ключ для БД
+		String key	= ((CredentialBase)credentials).mKey;
 		// Значення апаратного токена для БД
 		byte[] tokenHw	= new byte[] {};
 		// Значення програмного токена для БД
@@ -176,7 +179,22 @@ public class StorageMethodDatabase implements IStorageMethod, AutoCloseable {
 			throw new Exception("Unknown credentials");
 		}
 		// Додання у таблицю
-		mStatement.executeUpdate("INSERT INTO 'Credentials' ('TokenHw', 'TokenSw', 'Login', 'Password') VALUES (" + tokenHw + ", " + tokenSw + ", " + login + ", " + password + ");");
+		mStatement.executeUpdate("INSERT INTO 'Credentials' ('Key', 'TokenHw', 'TokenSw', 'Login', 'Password') VALUES (\'" + key + "\', \'" + new String(tokenHw) + "\', \'" + new String(tokenSw) + "\', \'" + login + "\', \'" + password + "\');");
+	}
+
+	// Видалити дані за відповідним ключем
+	@Override
+	public void remove(String key) throws Exception {
+		// Try
+		try {
+			// Видалення облікового запису з БД
+			mStatement.executeUpdate("DELETE FROM 'Credentials' WHERE Key = \'" + key + "\';");
+		}
+		// Catch
+		catch (Exception e) {
+			// Відображення помилки у лог
+			e.printStackTrace();
+		}
 	}
 
 

@@ -2,7 +2,7 @@ package org.study.credentials;
 
 
 // Клас збереження даних реєстрації у форматі програмного токена
-public class CredentialSoftwareToken implements ICredential {
+public class CredentialSoftwareToken extends CredentialBase {
 
 
 	// Значення програмного токена
@@ -10,7 +10,9 @@ public class CredentialSoftwareToken implements ICredential {
 
 
 	// Конструктор
-	public CredentialSoftwareToken(byte[] token) {
+	public CredentialSoftwareToken(String key, byte[] token) {
+		// Базовий конструктор
+		super(key);
 		// Збереження програмного токена
 		mToken = token;
 	}
