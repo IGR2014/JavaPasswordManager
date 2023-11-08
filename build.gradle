@@ -1,17 +1,25 @@
+//
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+}
+
 // Плагіни
 plugins {
+	id 'java'
 	id 'application'
 	id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
-// Репозиторії для пошуку пакетів
-repositories {
-	mavenCentral() 
+// Параметри Java
+java {
+	modularity.inferModulePath.set(false)
 }
 
-// Параметри додатку
-application {
-	// TODO
+// Репозиторії для пошуку пакетів
+repositories {
+	mavenCentral()
 }
 
 // Список залежностей
@@ -22,8 +30,32 @@ dependencies {
 // Параметри JavaFX GUI
 javafx {
 	version = '17.0.9'
-	modules = ['javafx.controls']
+	modules = [
+		'javafx.base',
+		'javafx.controls',
+		'javafx.fxml'
+	]
 }
 
-// Головний клас додатку
-mainClassName = 'org.study.Main'
+// Параметри збірки JAR
+jar {
+	// Відхиляти дублікати
+	duplicatesStrategy DuplicatesStrategy.EXCLUDE
+	// Маніфест
+	manifest.attributes 'Main-Class': 'org.openjfx.Main'
+	// Рантайм-залежності
+	from {
+		configurations.runtimeClasspath.collect {
+			it.isDirectory() ? it : zipTree(it)
+		}
+	}
+	// Виключення
+	exclude 'META-INF/*.SF'
+	exclude 'META-INF/*.DSA'
+	exclude 'META-INF/*.RSA'
+}
+
+// артефакти збірки
+artifacts {
+	archives jar
+}

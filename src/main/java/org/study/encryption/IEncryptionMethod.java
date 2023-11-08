@@ -6,7 +6,7 @@ public interface IEncryptionMethod {
 
 
 	// Метод розрахунку хешу даних
-	public byte[] hash(byte[] data);
+	byte[] hash(byte[] data);
 
 
 }

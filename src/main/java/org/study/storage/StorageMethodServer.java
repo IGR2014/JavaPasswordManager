@@ -29,7 +29,7 @@ public class StorageMethodServer implements IStorageMethod {
 	@Override
 	public List<String> keys() {
 		//
-		return new ArrayList<String> ();
+		return new ArrayList<> ();
 	}
 
 

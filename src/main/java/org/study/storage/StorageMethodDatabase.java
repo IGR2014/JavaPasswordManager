@@ -166,7 +166,7 @@ public class StorageMethodDatabase implements IStorageMethod, AutoCloseable {
 		// Це програмний токен ?
 		} else if (credentials instanceof CredentialSoftwareToken) {
 			// Отримання значення програмного токена
-			tokenSw		= ((CredentialHardwareToken)credentials).mToken;
+			tokenSw		= ((CredentialSoftwareToken)credentials).mToken;
 		// Це логін/пароль токен ?
 		} else if (credentials instanceof CredentialLoginPassword) {
 			// Отримання значення логіну

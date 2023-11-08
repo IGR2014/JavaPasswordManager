@@ -6,7 +6,7 @@ public class CredentialSoftwareToken extends CredentialBase {
 
 
 	// Значення програмного токена
-	public byte[] mToken = null;
+	public byte[] mToken;
 
 
 	// Конструктор

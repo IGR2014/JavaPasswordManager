@@ -6,7 +6,7 @@ public abstract class CredentialBase implements ICredential {
 
 
 	// Ключ даних
-	public String mKey = "";
+	public String mKey;
 
 
 	// Конструктор

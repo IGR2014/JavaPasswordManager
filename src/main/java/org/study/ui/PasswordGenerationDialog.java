@@ -1,12 +1,7 @@
 package org.study.ui;
 
 
-import org.study.encryption.EncryptionMethodFactory;
-import org.study.encryption.IEncryptionMethod;
-
 // JavaFX
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -20,6 +15,9 @@ import javafx.stage.Stage;
 // Java
 import java.time.LocalDateTime;
 import java.util.Random;
+// Encryption
+import org.study.encryption.EncryptionMethodFactory;
+import org.study.encryption.IEncryptionMethod;
 
 
 // Ділог даних акаунту
@@ -91,23 +89,18 @@ public class PasswordGenerationDialog extends Stage {
 		generatePass();
 
 		// Дії при натисканні кнопки перегенерації паролю
+		// Обробник
 		passRegen.setOnAction(
-			new EventHandler<ActionEvent>() {
-				// Обробник
-				@Override
-				public void handle(ActionEvent event) {
+				event -> {
 					// Генерація паролю
 					generatePass();
 				}
-			}
 		);
 
 		// Дії при натисканні кнопки копіювання паролю
+		// Обробник
 		passCopy.setOnAction(
-			new EventHandler<ActionEvent>() {
-				// Обробник
-				@Override
-				public void handle(ActionEvent event) {
+				event -> {
 					// Отримання системного буферу обміну
 					Clipboard clipboard = Clipboard.getSystemClipboard();
 					// Ствоерння контексту буферу обміну
@@ -117,7 +110,6 @@ public class PasswordGenerationDialog extends Stage {
 					// Встановленн контексту буферу обміну
 					clipboard.setContent(content);
 				}
-			}
 		);
 
 		// Макет розподілу елементів додається у макет вікна
@@ -135,7 +127,7 @@ public class PasswordGenerationDialog extends Stage {
 			// Base64
 			final IEncryptionMethod encryptionBASE64 = EncryptionMethodFactory.getInstance("BASE64");
 			// Випадкове число + поточні локальні дата та час
-			final String salt = Double.toString(new Random().nextDouble()) + " " + LocalDateTime.now().toString();
+			final String salt = new Random().nextDouble() + " " + LocalDateTime.now().toString();
 			// Генерація хєшу
 			final byte[] hash = encryptionSHA512.hash(encryptionBASE64.hash(salt.getBytes()));
 			// Згенерований пароль у HEX виді

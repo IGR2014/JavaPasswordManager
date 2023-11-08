@@ -36,7 +36,6 @@ public final class EncryptionMethodFactory {
 			// Незнайомий метод
 			else {
 				// Створення об'єкта шифрування
-				mInstance = null;
 			}
 		}
 		// Повернення об'єкта шифрування

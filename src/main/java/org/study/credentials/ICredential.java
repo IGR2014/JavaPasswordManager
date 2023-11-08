@@ -6,7 +6,7 @@ public interface ICredential {
 
 
 	// Метод валідації даних реєстрації
-	public boolean isValid();
+	boolean isValid();
 
 
 }

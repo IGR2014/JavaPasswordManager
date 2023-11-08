@@ -25,12 +25,10 @@ public final class StorageMethodFactory {
 			// Перевірка типу переданих даних
 			else if (credential instanceof CredentialHardwareToken) {
 				// Створення об'єкта зберігача даних
-				mInstance = null;
 			}
 			// Перевірка типу переданих даних
 			else if (credential instanceof CredentialSoftwareToken) {
 				// Створення об'єкта зберігача даних
-				mInstance = null;
 			}
 		}
 		// Повернення об'єкта зберігача даних

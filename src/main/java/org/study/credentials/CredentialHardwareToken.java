@@ -6,7 +6,7 @@ public class CredentialHardwareToken extends CredentialBase {
 
 
 	// Значення апаратного токена
-	public byte[] mToken = null;
+	public byte[] mToken;
 
 
 	// Конструктор

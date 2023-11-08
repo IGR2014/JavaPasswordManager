@@ -1,11 +1,9 @@
-package org.study;
+package org.openjfx;
 
 
 // JavaFX
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -28,7 +26,7 @@ public class Main extends Application {
 
 	// Запуск додатку
 	@Override
-	public void start(Stage stage) throws Exception {
+	public void start(Stage stage) {
 
 		// Іконка головного вікна додатку
 		stage.getIcons().add(new Image(Main.class.getResourceAsStream("/icon.png")));
@@ -45,12 +43,10 @@ public class Main extends Application {
 		loginDialog.show();
 
 		// Дії при натисканні кнопки входу у додаток
+		// Обробник
 		loginDialog.onSignIn(
 			// Екземпляр обробника дій
-			new EventHandler<ActionEvent>() {
-				// Обробник
-				@Override
-				public void handle(ActionEvent event) {
+				event -> {
 					// Try
 					try {
 						// Користувацькі дані
@@ -74,22 +70,18 @@ public class Main extends Application {
 					// Закрити логін діалог
 					loginDialog.close();
 				}
-			}
 		);
 
 		// Дії при натисканні кнопки реєстрації у додатку
+		// Обробник
 		loginDialog.onSignUp(
 			// Екземпляр обробника дій
-			new EventHandler<ActionEvent>() {
-				// Обробник
-				@Override
-				public void handle(ActionEvent event) {
+				event -> {
 					// Закриття усіх вікон
 					Platform.exit();
 					// Вихід з програми
 					System.exit(0);
 				}
-			}
 		);
 
 	}

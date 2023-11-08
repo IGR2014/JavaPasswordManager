@@ -163,11 +163,9 @@ public class CredentialDialog extends Stage {
 		}
 
 		// Дії при натисканні кнопки відображення паролю
+		// Обробник
 		passShow.setOnAction(
-			new EventHandler<ActionEvent>() {
-				// Обробник
-				@Override
-				public void handle(ActionEvent event) {
+				event -> {
 					// Якщо строка порожня
 					if (passwordLbl2.getText().isEmpty()) {
 						// Відобразити поточний пароль
@@ -177,28 +175,23 @@ public class CredentialDialog extends Stage {
 						passwordLbl2.setText("");
 					}
 				}
-			}
 		);
 
 		// Дії при натисканні кнопки збереження даних
+		// Обробник
 		accSave.setOnAction(
-			new EventHandler<ActionEvent>() {
-				// Обробник
-				@Override
-				public void handle(ActionEvent event) {
+				event -> {
 					// Try
 					try {
 						// Збереження нових даних
 						StorageMethodFactory.getInstance(null).store(new CredentialLoginPassword(keyFld.getText(), userNameFld.getText(), passwordFld.getText()));
-					}
-					catch (Exception e) {
+					} catch (Exception e) {
 						// Відображення помилки у лог
 						e.printStackTrace();
 					}
 					// Закриття діалогу
 					close();
 				}
-			}
 		);
 
 		// Макет розподілу елементів додається у макет вікна

@@ -6,9 +6,9 @@ public class CredentialLoginPassword extends CredentialBase {
 
 
 	// Логін користувача
-	public String	mLogin		= null;
+	public String	mLogin;
 	// Пароль користувача
-	public String	mPassword	= null;
+	public String	mPassword;
 
 
 	// Конструктор

@@ -9,10 +9,10 @@ import org.study.credentials.ICredential;
 public interface ILoginMethod {
 
 	// Метод входу у додаток доступний ?
-	public boolean isAvailable();
+	boolean isAvailable();
 
 	// Перевірка даних входу
-	public boolean validate(ICredential credential) throws Exception;
+	boolean validate(ICredential credential) throws Exception;
 
 
 }
